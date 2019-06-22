@@ -25,10 +25,10 @@ RUN curl -sS https://getcomposer.org/installer | php \
         && mv composer.phar /usr/local/bin/ \
         && ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
 
+# Set Composer Env to allow for root user installs
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
 # Setting locales
 RUN echo de_DE.UTF-8 UTF-8 > /etc/locale.gen && locale-gen
-
-# Allow container to write on host
-RUN usermod -u 1000 www-data
 
 WORKDIR /application
