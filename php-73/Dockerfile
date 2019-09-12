@@ -24,6 +24,9 @@ RUN docker-php-ext-install zip
 RUN pecl install redis apcu
 RUN docker-php-ext-enable redis apcu
 
+# Installing Sentry CLI
+RUN curl -sL https://sentry.io/get-cli/ | bash
+
 # Installing composer
 RUN curl -sS https://getcomposer.org/installer | php \
         && mv composer.phar /usr/local/bin/ \
