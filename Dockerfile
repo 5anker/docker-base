@@ -38,6 +38,8 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 # Setting locales
 RUN echo de_DE.UTF-8 UTF-8 > /etc/locale.gen && locale-gen
 
+RUN composer global require laravel/envoy
+
 #
 # Install Node (with NPM), and Yarn (via package manager for Debian)
 #
