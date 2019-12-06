@@ -55,6 +55,7 @@ RUN set -xe \
 		jpeg-dev \
 		freetype-dev \
 		libpng-dev  \
+		libwebp-dev \
 		libjpeg-turbo-dev \
 		# for xslt
 		libxslt-dev \
@@ -80,7 +81,7 @@ RUN set -xe \
     && rm -rf /tmp/* /usr/local/lib/php/doc/* /var/cache/apk/*
 
 # Installing extensions
-RUN docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/ \
+RUN docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/ --with-webp-dir=/usr/include/ \
     && docker-php-ext-configure zip --with-libzip \
     && docker-php-ext-install gd zip \
     && pecl install redis imagick apcu \
