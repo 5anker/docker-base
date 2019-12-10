@@ -1,7 +1,7 @@
 image: docker:git
 
 services:
-  - docker:18.09.7-dind
+  - docker:19.03.5-dind
 
 before_script:
   - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY

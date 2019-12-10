@@ -73,6 +73,8 @@ RUN set -xe \
 		imagemagick \
 		imagemagick-libs \
 		imagemagick-dev \
+		# mysql
+		mariadb-client \
     && docker-php-ext-configure intl \
     && docker-php-ext-install intl pdo_mysql mbstring exif pcntl zip soap calendar iconv \
     && docker-php-ext-enable intl \
