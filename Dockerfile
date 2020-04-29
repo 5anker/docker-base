@@ -82,6 +82,8 @@ RUN set -xe \
     && apk del .build-deps \
     && rm -rf /tmp/* /usr/local/lib/php/doc/* /var/cache/apk/*
 
+RUN curl -sS https://github.com/DataDog/dd-trace-php/releases/download/0.44.0/datadog-php-tracer_0.44.0_noarch.apk | apk add --allow-untrusted
+
 # Installing extensions
 RUN docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/ --with-webp-dir=/usr/include/ \
     && docker-php-ext-configure zip --with-libzip \
