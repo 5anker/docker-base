@@ -72,7 +72,7 @@ RUN set -xe \
 		pngquant \
 		gifsicle \
 		# imagemagic
-		imagemagick=7.0.9-7 \
+		imagemagick==7.0.9 \
 		imagemagick-libs \
 		imagemagick-dev \
 		# mysql
