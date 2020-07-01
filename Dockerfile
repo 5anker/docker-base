@@ -25,6 +25,8 @@ RUN touch artisan
 FROM php:7.3-fpm-alpine as php
 LABEL maintainer="j.imping@5-anker.com"
 
+RUN echo "FORCE REBUILD"
+
 # Install lib support
 RUN set -xe \
     && apk add --update \
