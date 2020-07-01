@@ -8,8 +8,8 @@ LABEL maintainer="j.imping@5-anker.com"
 # Install lib support
 RUN set -xe \
     && apk add --no-cache \
-		curl \
-		bash
+		bash \
+		curl
 
 RUN curl -sL https://sentry.io/get-cli/ | bash
 
