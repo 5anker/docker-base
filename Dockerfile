@@ -41,6 +41,7 @@ RUN set -xe \
 		file \
 		g++ \
 		gcc \
+		libtool \
 		libc-dev \
 		pcre-dev \
 		libzip-dev \
