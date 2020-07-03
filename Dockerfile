@@ -22,7 +22,7 @@ RUN touch artisan
 # PHP
 ###############################################################################
 
-FROM php:7.3-fpm-alpine as php
+FROM php:7.3.17-fpm-alpine as php
 LABEL maintainer="j.imping@5-anker.com"
 
 RUN echo "FORCE REBUILD AGAIN"
@@ -85,9 +85,9 @@ RUN set -xe \
     && apk del .build-deps \
     && rm -rf /tmp/* /usr/local/lib/php/doc/* /var/cache/apk/*
 
-RUN curl -sSLO https://github.com/DataDog/dd-trace-php/releases/download/0.44.0/datadog-php-tracer_0.44.0_noarch.apk && \
-    apk add datadog-php-tracer_0.44.0_noarch.apk --allow-untrusted && \
-    rm datadog-php-tracer_0.44.0_noarch.apk
+RUN curl -sSLO https://github.com/DataDog/dd-trace-php/releases/download/0.46.0/datadog-php-tracer_0.46.0_noarch.apk && \
+    apk add datadog-php-tracer_0.46.0_noarch.apk --allow-untrusted && \
+    rm datadog-php-tracer_0.46.0_noarch.apk
 
 # Installing extensions
 RUN docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/ --with-webp-dir=/usr/include/ \
