@@ -85,9 +85,10 @@ RUN set -xe \
     && apk del .build-deps \
     && rm -rf /tmp/* /usr/local/lib/php/doc/* /var/cache/apk/*
 
-RUN curl -sSLO https://github.com/DataDog/dd-trace-php/releases/download/0.46.0/datadog-php-tracer_0.46.0_noarch.apk && \
-    apk add datadog-php-tracer_0.46.0_noarch.apk --allow-untrusted && \
-    rm datadog-php-tracer_0.46.0_noarch.apk
+# DataDog PHP Tracer
+RUN curl -sSLO https://github.com/DataDog/dd-trace-php/releases/download/0.47.1/datadog-php-tracer_0.47.1_noarch.apk && \
+    apk add datadog-php-tracer_0.47.1_noarch.apk --allow-untrusted && \
+    rm datadog-php-tracer_0.47.1_noarch.apk
 
 # Installing extensions
 RUN docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/ --with-webp-dir=/usr/include/ \
@@ -99,13 +100,15 @@ RUN docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include/ --wi
 RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ --allow-untrusted gnu-libiconv
 ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so
 
-# Installing composer
-RUN curl -sS https://getcomposer.org/installer | php \
-        && mv composer.phar /usr/local/bin/ \
-        && ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
+# Install Composer.
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && ln -s $(composer config --global home) /root/composer
+ENV PATH=$PATH:/root/composer/vendor/bin COMPOSER_ALLOW_SUPERUSER=1
 
-# Set Composer Env to allow for root user installs
-ENV COMPOSER_ALLOW_SUPERUSER=1
+# Install prestissimo (composer plugin). Plugin that downloads packages in parallel to speed up the installation process
+# After release of Composer 2.x, remove prestissimo, because parallelism already merged into Composer 2.x branch:
+# https://github.com/composer/composer/pull/7904
+RUN composer global require hirak/prestissimo
 
 # Docker user permssio
 RUN usermod -u 1000 www-data
