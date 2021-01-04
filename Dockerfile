@@ -2,7 +2,7 @@
 # Node JS
 ###############################################################################
 
-FROM node:10.17-alpine as nodejs
+FROM node:lts-alpine as nodejs
 LABEL maintainer="j.imping@5-anker.com"
 
 # Install lib support
@@ -24,8 +24,6 @@ RUN touch artisan
 
 FROM php:7.3.17-fpm-alpine as php
 LABEL maintainer="j.imping@5-anker.com"
-
-RUN echo "FORCE REBUILD AGAIN"
 
 # Install lib support
 RUN set -xe \
@@ -86,9 +84,9 @@ RUN set -xe \
     && rm -rf /tmp/* /usr/local/lib/php/doc/* /var/cache/apk/*
 
 # DataDog PHP Tracer
-RUN curl -sSLO https://github.com/DataDog/dd-trace-php/releases/download/0.47.1/datadog-php-tracer_0.47.1_noarch.apk && \
-    apk add datadog-php-tracer_0.47.1_noarch.apk --allow-untrusted && \
-    rm datadog-php-tracer_0.47.1_noarch.apk
+RUN curl -sSLO https://github.com/DataDog/dd-trace-php/releases/download/0.53.0/datadog-php-tracer_0.53.0_noarch.apk && \
+    apk add datadog-php-tracer_0.53.0_noarch.apk --allow-untrusted && \
+    rm datadog-php-tracer_0.53.0_noarch.apk
 
 # Installing extensions
 RUN docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/ --with-webp-dir=/usr/include/ \
@@ -105,12 +103,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
     && ln -s $(composer config --global home) /root/composer
 ENV PATH=$PATH:/root/composer/vendor/bin COMPOSER_ALLOW_SUPERUSER=1
 
-# Install prestissimo (composer plugin). Plugin that downloads packages in parallel to speed up the installation process
-# After release of Composer 2.x, remove prestissimo, because parallelism already merged into Composer 2.x branch:
-# https://github.com/composer/composer/pull/7904
-RUN composer global require hirak/prestissimo
-
-# Docker user permssio
+# Docker user permissions
 RUN usermod -u 1000 www-data
 
 # PHP config
